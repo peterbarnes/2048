@@ -8,15 +8,21 @@ public class Game2048 {
 		Random rd = new Random();
 		r = rd.nextInt(4);
 		c = rd.nextInt(4);
-		if(table[r][c] == 0){
-			// TODO Add random 4
-			table[r][c] = 2;
+		int option = 0;
+		do{
 			
-		} else if(table[r][c] != 0){
+			if(table[r][c] == 0){
+				// TODO Add random 4
+				table[r][c] = 2;
+				option = 1;
+				
+			} else if(table[r][c] != 0){
+				
+				table[r][c] = table[r][c];
+				
+			}
 			
-			table[r][c] = table[r][c];
-			
-		}
+		}while(option == 0);
 		
 	}
 	
