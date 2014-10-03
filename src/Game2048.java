@@ -5,9 +5,9 @@ public class Game2048 {
 	Random rd = new Random();
 	Scanner sc = new Scanner(System.in);
 	
-	public void fillSpace(int[][]table, int r, int c){
-		r = rd.nextInt(4);
-		c = rd.nextInt(4);
+	public void fillSpace(int[][]table){
+		int r = rd.nextInt(4);
+		int c = rd.nextInt(4);
 		int option = 0;
 		do{
 			if(table[r][c] == 0){
@@ -25,9 +25,16 @@ public class Game2048 {
 			for(int c = 0; c < 4; c++){
 				for(int i = 1; i < 4; i++){
 					if(table[j][i] != 0){
-						table[j][i - 1] = table[j][i];
-						table[j][i] = 0;
-					} 
+						if(table[j][i-1] == 0){
+							table[j][i-1] = table[j][i];
+							table[j][i] = 0;
+						} else if(table[j][i-1] == table[j][i]){
+							table[j][i-1] = table[j][i] * table[j][i];
+							table[j][i] = 0;
+						} else if(table[j][i-1] != table[j][i]){
+							// Do nothing
+						}
+					}
 				}
 			}
 		}
@@ -85,29 +92,28 @@ public class Game2048 {
 			moveDown(table);
 		} else if(input.equalsIgnoreCase("d")){
 			moveRight(table);
-		} 
-		fillSpace(table, r, c);
+		}
+		
+		fillSpace(table);
 		printTable(table);
 	}
 		
 	public void printTable(int[][] table){
 		for(int i = 0; i < 4; i++){
 			for(int j = 0; j < 4; j++){
-				System.out.print(table[i][j] + " ");	
+				System.out.print(table[i][j] + "\t");	
 			}
 			System.out.println(" ");
 		}
 	}
 
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
 		int option = 0;
 		Game2048 game = new Game2048();
-		int r = 0, c = 0;
 		
 		int[][] table = new int[4][4];
-		game.fillSpace(table, r, c);
-		game.fillSpace(table, r, c);
+		game.fillSpace(table);
+		game.fillSpace(table);
 		game.printTable(table);
 		
 		do{
