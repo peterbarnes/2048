@@ -6,18 +6,18 @@ public class Game2048 {
 	Scanner sc = new Scanner(System.in);
 	
 	public void fillSpace(int[][]table){
-		int r = rd.nextInt(4);
-		int c = rd.nextInt(4);
 		int option = 0;
-		do{
+		while(option == 0){
+			int r = rd.nextInt(4);
+			int c = rd.nextInt(4);
 			if(table[r][c] == 0){
-				// TODO Add random 4
 				table[r][c] = 2;
-				option = 1;	
+				option = 1;
 			} else if(table[r][c] != 0){
 				table[r][c] = table[r][c];
 			}
-		}while(option == 0);
+		}
+
 	}
 	
 	public void moveLeft(int[][] table){
@@ -29,7 +29,7 @@ public class Game2048 {
 							table[j][i-1] = table[j][i];
 							table[j][i] = 0;
 						} else if(table[j][i-1] == table[j][i]){
-							table[j][i-1] = table[j][i] * table[j][i];
+							table[j][i-1] = table[j][i] * 2;
 							table[j][i] = 0;
 						} else if(table[j][i-1] != table[j][i]){
 							// Do nothing
@@ -45,8 +45,15 @@ public class Game2048 {
 			for(int c = 0; c < 4; c++){
 				for(int i = 2; i >= 0; i--){
 					if(table[j][i] != 0){
-						table[j][i + 1] = table[j][i];
-						table[j][i] = 0;
+						if(table[j][i+1] == 0){
+							table[j][i+1] = table[j][i];
+							table[j][i] = 0;
+						} else if(table[j][i+1] == table[j][i]){
+							table[j][i+1] = table[j][i] * 2;
+							table[j][i] = 0;
+						} else if(table[j][i+1] !=  table[j][i]){
+							// Do nothing
+						}
 					}
 				}
 			}
@@ -80,22 +87,28 @@ public class Game2048 {
 	}
 	
 	public void moveSpace(int[][] table){
-		int r = rd.nextInt(4);
-		int c = rd.nextInt(4);
 		System.out.println("Enter your direction [W-A-S-D]");
+		System.out.println("1");
 		String input = sc.next();
+		System.out.println(input);
 		if(input.equalsIgnoreCase("a")){
+			System.out.println("2");
 			moveLeft(table);
 		} else if(input.equalsIgnoreCase("w")){
+			System.out.println("3");
 			moveUp(table);
 		} else if(input.equalsIgnoreCase("s")){
+			System.out.println("4");
 			moveDown(table);
 		} else if(input.equalsIgnoreCase("d")){
+			System.out.println("5");
 			moveRight(table);
 		}
-		
+		System.out.println("6");
 		fillSpace(table);
+		System.out.println("7");
 		printTable(table);
+		System.out.println("done");
 	}
 		
 	public void printTable(int[][] table){
